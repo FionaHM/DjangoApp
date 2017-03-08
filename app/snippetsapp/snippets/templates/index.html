@@ -1,0 +1,34 @@
+<!-- howdy/templates/index.html -->
+<!DOCTYPE html>
+<html>
+    <head>
+
+
+        <meta charset="utf-8">
+        <title>Howdy!</title>
+    </head>
+    <body>
+
+        {% block content %}
+            <h1>New post</h1>
+            <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+            </form>
+        
+            <div>
+            {% if snippets %}
+                <div>
+
+                {% for snippet in snippets %}
+                    <h2>{{ snippet.title }}</h2>
+                    <p>Volume {{ snippet.snippet }}, Number {{ snippet.description }}</p>
+                {% endfor %}
+          
+
+                </div>
+            {% endif %}
+            </div>
+        {% endblock %}
+    </body>
+</html>
