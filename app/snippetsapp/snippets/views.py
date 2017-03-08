@@ -21,7 +21,6 @@ class HomePageView(TemplateView):
 
     def post(self, request, **kwargs):
         form = AddSnippet(request.POST)
-        get_snippets()
         # verify that form is valid
         if form.is_valid():
             # save the form data to database
