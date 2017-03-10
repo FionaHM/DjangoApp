@@ -8,8 +8,8 @@ class AddSnippet(forms.ModelForm):
         model = Snippets
         fields = ('title','language', 'description', 'snippet',)
 
-class EditSnippet(forms.ModelForm):
+# class EditSnippet(forms.ModelForm):
 
-    class Meta:
-        model = Snippets
-        fields = ('title', 'language', 'description', 'snippet','updated_at')
+#      class Meta:
+#         model = Snippets
+#         fields = '__all__'

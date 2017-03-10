@@ -1,122 +1,128 @@
-<!-- howdy/templates/index.html -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Howdy!</title>
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="container">
-            <div class="jumbotron text-center"><h3>Code Snippets</h3></div>
-            {% block content %}
-                <div class= "row">
-                    <!--<form method="POST" class="post-form">{% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="save btn btn-default">Save</button>
-                    </form>-->
-                    <form action="/add/" method="POST" class="post-form">{% csrf_token %}
-                            <div class="row">
+{% extends 'base.html' %}
+
+{% block title %} Index {% endblock %}
+            
+{% block content %}
+<div class="jumbotron text-center"><h3>Code Snippets</h3></div>
+<div class= "row">
+    <form action="/add/" method="POST" class="post-form">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.non_field_errors }}
+                    {% if error %} 
+                        <div class="row text-center">
                                 <div class="col-md-12">
-                                    {{ form.non_field_errors }}
-                                    <div class="fieldWrapper">
-                                        {{ form.title.errors }}
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"><label for="id_title">Title</label></div>
-                                        <div class="col-md-6">{{ form.title }}</div>
-                                    </div>
+                                    <h5><strong>Save Error: </strong> {{ error }}  </h5> 
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="fieldWrapper">
-                                        {{ form.language.errors }}
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3">
-                                            <label for="id_language">Language</label>
-                                        </div>
-                                        <div class="col-md-6">{{ form.language }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <div class="fieldWrapper">
-                                        {{ form.description.errors }}
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"><label for="id_description">Description</label></div>
-                                        <div class="col-md-6">{{ form.description }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="fieldWrapper">
-                                        {{ form.snippet.errors }}
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"><label for="id_snippet">Snippet</label></div>
-                                        <div class="col-md-6">{{ form.snippet }}</div>
-                                    </div>
-                                </div>
-                            </row>
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <p><button type="submit" class="save btn btn-default">Save</button></p>
-                                </div>
-                            </div>
-                    </form>
-                </div>
-                <div class="row">
-                    {% if edititem %}
-                    <h4 class="text-center jumbotron">Update Snippet</h4>
-                        <br/>
-                        <div class="row">
-                            <div class="col-md-2 text-center"><strong>Language</strong></div>
-                            <div class="col-md-4 text-center"><strong>Description</strong></div>
-                            <div class="col-md-4 text-center"><strong>Snippet</strong></div>
-                            <div class="col-md-2"></div>
                         </div>
-                        <br/>
-                        <form action="/update_item/" method="post">{% csrf_token %}
-                            <div class="col-md-2">{{ edititem.language }}</div>
-                            <div class="col-md-4">{{ edititem.description }}</div>
-                            <div class="col-md-4">{{ edititem.snippet }}</div>
-                            <div class="col-md-2"><button type="submit" class="save btn btn-default">Update</button></div>
-                            <div hidden>{{ edititem.title }}</div>
-                        </form>
                     {% endif %}
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4 class="text-center jumbotron">Saved Snippets</h4>
-                        {% if snippets %}
-                            <div class="panel panel-body">
-                                <div class="row">
-                                    <div class="col-md-2 text-center"><strong>Title</strong></div>
-                                    <div class="col-md-2 text-center"><strong>Language</strong></div>
-                                    <div class="col-md-2 text-center"><strong>Description</strong></div>
-                                    <div class="col-md-2 text-center"><strong>Snippet</strong></div>
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2"></div>
-                                </div>
-                                <br/>
-                                {% for snippet in snippets %}
-                                    <div class="row">
-                                        <div class="col-md-2">{{ snippet.title }}</div>
-                                        <div class="col-md-2">{{ snippet.language }}</div>
-                                        <div class="col-md-2">{{ snippet.description }}</div>
-                                        <div class="col-md-2"><pre>{{ snippet.snippet }}</pre></div>
-                                        <a class="col-md-2 text-center" href="{% url 'delete_item' pk=snippet.pk %}" >Delete</a></button>
-                                        <a class="col-md-2 text-center" href="{% url 'edit_item' pk=snippet.pk %}">Edit</a>
-                                    </div>
-                                        
-                                {% endfor %}                
-                            </div>
-                        {% endif %}
+                    <div class="fieldWrapper text-center">
+                        {{ form.title.errors }}
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"><label for="id_title">Title</label></div>
+
+                        <div class="col-md-6">{{ form.title }}</div>
                     </div>
-              </div>
-         {% endblock %}
-        </div>
-    </body>
-</html>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="fieldWrapper text-center">
+                        {{ form.language.errors }}
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <label for="id_language">Language</label>
+                        </div>
+                        <div class="col-md-6">{{ form.language }}</div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="fieldWrapper text-center">
+                        {{ form.description.errors }}
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"><label for="id_description">Description</label></div>
+                        <div class="col-md-6">{{ form.description }}</div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="fieldWrapper text-center">
+                        {{ form.snippet.errors }}
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"><label for="id_snippet">Snippet</label></div>
+                        <div class="col-md-6">{{ form.snippet }}</div>
+                    </div>
+                </div>
+            </row>
+            <br/>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p><button type="submit" class="save btn btn-success">Save</button></p>
+                </div>
+            </div>
+    </form>
+</div>
+<div class="row">
+   
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="text-center jumbotron">Saved Snippets</h4>
+        {% if updateerror %} 
+            <div class="row text-center">
+                    <div class="col-md-12">
+                        <h5><strong>Update Error: </strong>   {{ updateerror }}  </h5> 
+                    </div>
+            </div>
+        {% endif %}
+        {% if snippets %}
+            <div class="panel panel-body">
+                <div class="row">
+                    <div class="col-md-2 text-center"><strong>Title</strong></div>
+                    <div class="col-md-2 text-center"><strong>Language</strong></div>
+                    <div class="col-md-2 text-center"><strong>Description</strong></div>
+                    <div class="col-md-2 text-center"><strong>Snippet</strong></div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br/>
+
+                {% for snippet in snippets %}
+                    <div class="row">
+                        <div class="col-md-2 text-center">{{ snippet.title }}</div>
+                        <div class="col-md-2 text-center">{{ snippet.language }}</div>
+                        <div class="col-md-2 text-center">{{ snippet.description }}</div>
+                        <div class="col-md-2 text-center"><pre>{{ snippet.snippet }}</pre></div>
+                        <div class="col-md-2 text-center"><a href="{% url 'delete_item' pk=snippet.pk %}" >Delete</a></div>
+                        <div class="col-md-2 text-center"><a href="{% url 'edit_item' pk=snippet.pk %}">Edit</a></div>
+                    </div>
+
+                     {% if edititem %}
+                         {% if edititem.pk == snippet.pk %}
+                            <div class="row">
+                                <form action="/update_item/" method="POST" class="post-form">{% csrf_token %}
+                                    <div class="col-md-2 text-center"><input type="text" name="title" value = {{edititem.title }} maxlength='100' class="text-center" required /></div>
+                                    <div class="col-md-2 text-center"><input type="text" name="language" value = {{ edititem.language }} maxlength='200' class="text-center" required/></div>
+                                    <div class="col-md-2 text-center"><input type="text" name="description" value = {{ edititem.description }} maxlength='200'  class="text-center" required/></div>
+                                    <div class="col-md-2 text-center"><input type="text" name="snippet" value = {{ edititem.snippet }} maxlength='300' class="text-center" required/></div>
+                                    <div class="col-md-2 text-center"><button type="submit" class="btn btn-success save">Update</button></div>
+                                    <div class="col-md-2 text-center"></div>
+                                    <input hidden type="text" name="pk" value = {{ edititem.pk }} ></div>
+                                </form>
+                            </div>
+                            <hr/>
+                        {% endif %}
+                    {% endif %}
+                    <hr/>
+                {% endfor %}                
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
