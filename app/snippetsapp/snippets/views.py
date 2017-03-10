@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.utils import timezone
@@ -15,6 +13,7 @@ def delete_item(request, pk):
     # delete it
     post.delete()
     snippets = Snippets.objects.all()
+    # // reset the form
     form = AddSnippet()
     return render(request, 'index.html', {'form': form, "snippets": snippets, "error": ""})
 
@@ -24,6 +23,7 @@ def edit_item(request, pk):
     primaryKey = pk
     item = Snippets.objects.get(pk = pk)
     snippets = Snippets.objects.all()
+    # // reset the form
     form = AddSnippet()
     # edititem = EditSnippet(instance=item)
     return render(request, 'index.html', {'form': form, "snippets": snippets, 'edititem': item, "error": ""})
